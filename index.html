@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lugar especial de Sidney</title>
+    <style>
+        body {
+            text-align: center;
+            background-image: url('fondo-nubes.jpg'); /* Fondo de nubes */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            transition: background 1s ease-in-out;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #ff66b2;
+            text-shadow: 2px 2px 4px white;
+            margin-top: 50px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .sobre {
+            width: 150px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 10px rgba(255,102,178,0.5));
+        }
+
+        .sobre:hover {
+            transform: scale(1.1);
+        }
+
+        .carta {
+            display: none;
+            width: 80%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-size: 18px;
+            color: #333;
+            position: relative;
+            z-index: 10;
+        }
+
+        .boton {
+            background: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Fuegos artificiales */
+        .firework {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            opacity: 0;
+            animation: explode 1.5s ease-out forwards;
+            z-index: 5;
+        }
+
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1) translate(0, 0); }
+            100% { opacity: 0; transform: scale(4) translate(calc(-50vw + 100px), calc(-50vh + 100px)); }
+        }
+
+    </style>
+</head>
+<body>
+
+<h1 id="titulo">Lugar especial de Sidney</h1>
+
+<img src="https://cdn-icons-png.flaticon.com/512/3656/3656987.png" class="sobre" onclick="mostrarCarta()" alt="Sobre rosa">
+
+<div class="carta" id="carta">
+    <p>Eres una niña muy linda y especial. Me encanta cómo eres y te adoro con todo mi corazón. No me gusta verte triste, pero no tienes que preocuparte por nada, porque siempre estaré contigo.</p>
+    <button class="boton" onclick="ocultarCarta()">Cerrar</button>
+</div>
+
+<!-- Audio de fondo -->
+<audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    let fuegoInterval;
+
+    function mostrarCarta() {
+        document.getElementById("carta").style.display = "block";
+        document.getElementById("titulo").style.opacity = "0";
+        document.body.style.backgroundImage = "url('fondo-tulipanes.jpg')"; // Cambia a fondo de tulipanes
+
+        // Iniciar fuegos artificiales y música
+        lanzarFuegosArtificialesContinuos();
+        document.getElementById("musica").play().catch(() => {});
+    }
+
+    function ocultarCarta() {
+        document.getElementById("carta").style.display = "none";
+        document.getElementById("titulo").style.opacity = "1";
+        document.body.style.backgroundImage = "url('fondo-nubes.jpg')"; // Vuelve al fondo de nubes
+
+        // Detener efectos
+        clearInterval(fuegoInterval);
+        document.getElementById("musica").pause();
+    }
+
+    function lanzarFuegosArtificialesContinuos() {
+        fuegoInterval = setInterval(() => {
+            const firework = document.createElement("div");
+            firework.className = "firework";
+            firework.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            firework.style.left = `${Math.random() * 100}vw`;
+            firework.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 1500);
+        }, 300);
+    }
+</script>
+
+</body>
+</html>
